@@ -1,10 +1,10 @@
-name: Deploy to GitHub Pages
+name: Deploy React App to GitHub Pages
 
 on:
   push:
     branches: ["main"]
   workflow_dispatch:
-
+  
 permissions:
   contents: read
   pages: write
@@ -28,10 +28,15 @@ jobs:
           cache: 'npm'
       
       - name: Install dependencies
-        run: npm ci
+        run: |
+          npm ci
+          npm install lucide-react
       
       - name: Build
-        run: npm run build
+        run: |
+          npm run build
+          # Create a fallback index.html for SPA
+          cp dist/index.html dist/404.html
       
       - name: Setup Pages
         uses: actions/configure-pages@v3
